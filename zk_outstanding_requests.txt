@@ -1,0 +1,15 @@
+data="$(echo mntr | nc localhost 2181 | head -n 8 | tail -n 1 | awk '{print $2'})"
+data2="$(echo mntr | nc localhost 2181 | head -n 8 | tail -n 1 )"
+
+if [ $data -eq 0  ]; then
+echo "OK - $data2"
+exit 0
+elif [ $data -gt 5 ] && [ $data -lt 10 ]; then
+echo "WARNING - $data2"
+exit 1
+elif [ $data -gt 10 ]; then
+echo "CRITICAL - $data2"
+exit 2
+else
+echo "UNKNOWN - $data2"
+fi

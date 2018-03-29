@@ -1,0 +1,15 @@
+data="$(echo mntr | nc localhost 2181 | head -n 14 | tail -n 1 | awk '{print $2'})"
+data2="$(echo mntr | nc localhost 2181 | head -n 14 | tail -n 1 )"
+data3="$(echo mntr | nc localhost 2181 | head -n 15 | tail -n 1 | awk '{print $2'})"
+data4="$(($data3 * 85/100  ))"
+
+#echo "the 4th data is $data4"
+if [ $data -lt $data4 ]; then
+echo "OK - $data2"
+exit 0
+elif [ $data -gt $data4 ]; then
+echo "CRITICAL - $data2"
+exit 2
+else
+echo "UNKNOWN - $data2"
+fi
